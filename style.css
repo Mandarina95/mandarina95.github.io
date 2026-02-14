@@ -1,0 +1,165 @@
+:root {
+
+  --bg-color: #f3e5f5; /* Fondo suave */
+
+  --card-bg: #fdf5e6;   /* El color beige de la carta del video */
+
+  --accent: #e91e63;
+
+}
+
+body {
+
+  background-color: #ff007f;
+
+  background-image: radial-gradient(circle, #ff4081 10%, transparent 20%), radial-gradient(circle, #ad1457 10%, transparent 20%);
+
+  background-size: 50px 50px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  min-height: 100vh;
+
+  margin: 0;
+
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+.card {
+
+  background: var(--card-bg);
+
+  width: 90%;
+
+  max-width: 700px;
+
+  padding: 40px;
+
+  border-radius: 50px; /* Bordes muy redondeados como el video */
+
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+
+}
+
+.container {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+}
+
+.text-section {
+
+  width: 55%;
+
+  text-align: left;
+
+}
+
+.text-section p {
+
+  font-size: 1.1rem;
+
+  color: #4a4a4a;
+
+  margin-bottom: 15px;
+
+}
+
+.intro { font-weight: bold; font-size: 1.3rem !important; }
+
+.timer {
+
+  font-weight: bold;
+
+  font-size: 1.1rem;
+
+  color: #333;
+
+  border-top: 2px solid #333;
+
+  padding-top: 10px;
+
+}
+
+.love-footer {
+
+  font-size: 1.4rem !important;
+
+  margin-top: 10px;
+
+}
+
+/* El Árbol */
+
+.tree-section {
+
+  width: 40%;
+
+  position: relative;
+
+  height: 300px;
+
+}
+
+.tree { position: relative; width: 100%; height: 100%; }
+
+.trunk {
+
+  width: 25px;
+
+  height: 120px;
+
+  background: #5d4037;
+
+  position: absolute;
+
+  bottom: 0;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  border-radius: 5px;
+
+}
+
+.heart-leaf {
+
+  position: absolute;
+
+  width: 15px;
+
+  height: 15px;
+
+  background: #ff4d6d;
+
+  transform: rotate(-45deg);
+
+  border-radius: 50% 50% 0 0;
+
+  opacity: 0.9;
+
+}
+
+.heart-leaf::before {
+
+  content: ""; position: absolute;
+
+  width: 15px; height: 15px;
+
+  background: inherit;
+
+  border-radius: 50%;
+
+  top: -8px; left: 0;
+
+}
