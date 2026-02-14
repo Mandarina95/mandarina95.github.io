@@ -1,5 +1,4 @@
-window.onload = function() {
-    console.log("El script se ha cargado correctamente");
+
 
     // 1. CONFIGURACIÓN DEL TIEMPO
     const startDate = new Date("2023-01-03T00:00:00").getTime();
@@ -100,4 +99,3 @@ window.onload = function() {
   }
 })();
     
-};
