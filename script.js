@@ -46,4 +46,41 @@ window.onload = function() {
     } else {
         console.error("No se encontró el elemento con ID 'canopy'");
     }
+
+// 3. GENERADOR DE CASCADA DE CORAZONES
+    function createFallingHeart() {
+        const canopy = document.getElementById('canopy');
+        if (!canopy) return;
+
+        const heart = document.createElement('div');
+        heart.className = 'heart-falling'; // Clase diferente para la caída
+        heart.innerHTML = '❤'; // Usamos el carácter de corazón
+
+        // Posición inicial: que salgan de la zona del árbol
+        const startX = Math.random() * 150 + 40; 
+        heart.style.left = `${startX}px`;
+        heart.style.top = `80px`; 
+        
+        // Color aleatorio
+        const colors = ['#ff4d6d', '#ff758f', '#c9184a'];
+        heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+        
+        // Tamaño aleatorio
+        heart.style.fontSize = Math.random() * 10 + 10 + 'px';
+        
+        // Duración de caída aleatoria (entre 3 y 6 segundos)
+        const duration = Math.random() * 3 + 3;
+        heart.style.animation = `fall ${duration}s linear forwards`;
+
+        canopy.appendChild(heart);
+
+        // Limpiar el elemento después de que termine la animación para no saturar la PC
+        setTimeout(() => {
+            heart.remove();
+        }, duration * 1000);
+    }
+
+    // Iniciar la cascada cada 300ms
+    setInterval(createFallingHeart, 300);
+    
 };
