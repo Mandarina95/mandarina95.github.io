@@ -1,11 +1,15 @@
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("Script cargado y listo para celular");
 
-
-    // 1. CONFIGURACIÓN DEL TIEMPO
-    const startDate = new Date("2023-01-03T00:00:00").getTime();
+    // 1. CONFIGURACIÓN DEL TIEMPO (Formato compatible universal)
+    // Usamos comas en lugar de guiones para máxima compatibilidad en móviles
+    const startDate = new Date(2023, 0, 3, 0, 0, 0).getTime(); 
 
     function updateTimer() {
         const now = new Date().getTime();
         const diff = now - startDate;
+
+        if (diff < 0) return; // Por si la fecha es futura
 
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -14,6 +18,7 @@
 
         const timerElement = document.getElementById("timer");
         if (timerElement) {
+            // Formato más corto para que no se desborde en pantallas pequeñas
             timerElement.innerHTML = `${days}d ${hours}h ${mins}m ${secs}s`;
         }
     }
@@ -21,18 +26,18 @@
     setInterval(updateTimer, 1000);
     updateTimer();
 
-    // 2. GENERADOR DEL ÁRBOL
+    // 2. GENERADOR DEL ÁRBOL (Optimizado)
     const canopy = document.getElementById('canopy');
     if (canopy) {
         const colors = ['#ff4d6d', '#ff758f', '#c9184a', '#ffb3c1', '#a4133c'];
-        for (let i = 0; i < 150; i++) {
+        for (let i = 0; i < 100; i++) { // Bajamos a 100 para mejor rendimiento en móvil
             const heart = document.createElement('div');
             heart.className = 'heart-leaf';
             
             const angle = Math.random() * Math.PI * 2;
-            const radius = Math.random() * 100;
-            const x = Math.cos(angle) * radius + 110;
-            const y = Math.sin(angle) * radius + 80;
+            const radius = Math.random() * 80; // Radio un poco más pequeño para móvil
+            const x = Math.cos(angle) * radius + (canopy.offsetWidth / 2 || 110);
+            const y = Math.sin(angle) * radius + (canopy.offsetHeight / 2 || 80);
             
             heart.style.left = `${x}px`;
             heart.style.top = `${y}px`;
@@ -42,60 +47,35 @@
             
             canopy.appendChild(heart);
         }
-    } else {
-        console.error("No se encontró el elemento con ID 'canopy'");
     }
 
-// 3. GENERADOR DE CASCADA DE CORAZONES
-(function () {
-  const CONTAINER_SELECTOR = ".petal-container";
-  const PETAL_COUNT = 28;
-  const container = document.querySelector(CONTAINER_SELECTOR);
-  if (!container) return;
+    // 3. CASCADA DE CORAZONES (Corregido y simplificado)
+    const container = document.querySelector(".petal-container");
+    if (container && !container.dataset.petalsInit) {
+        container.dataset.petalsInit = "true";
+        const PETAL_COUNT = 20; // Menos cantidad = más fluidez en móvil
 
-  // Evitar ejecutar más de una vez
-  if (container.dataset.petalsInit === "true") return;
-  container.dataset.petalsInit = "true";
+        for (let i = 0; i < PETAL_COUNT; i++) {
+            const p = document.createElement("div");
+            p.className = "petal";
 
-  function rand(min, max) {
-    return Math.random() * (max - min) + min;
-  }
+            const scale = Math.random() * (1.5 - 0.6) + 0.6;
+            const size = Math.round(20 * scale);
+            
+            p.style.width = `${size}px`;
+            p.style.height = `${size}px`;
+            p.style.left = `${Math.random() * 100}%`;
+            p.style.top = `${Math.random() * -20 - 5}vh`;
 
-  // --- corazones ---
-  for (let i = 0; i < PETAL_COUNT; i++) {
-    const p = document.createElement("div");
-    p.className = "petal";
+            const fallDuration = Math.random() * (15 - 7) + 7;
+            const swayDuration = Math.random() * (5 - 2) + 2;
+            const delay = Math.random() * 10 - 5;
 
-    const base = 24;
-    const scale = rand(0.6, 1.5);
-    const size = Math.round(base * scale);
-    p.style.width = ${size}px;
-    p.style.height = ${size}px;
+            p.style.animationDuration = `${fallDuration}s, ${swayDuration}s`;
+            p.style.animationDelay = `${delay}s, ${Math.random() * 2}s`;
+            p.style.opacity = Math.random() * (1 - 0.7) + 0.7;
 
-    p.style.left = ${rand(-10, 110)}%;
-    p.style.top = ${rand(-20, -5)}vh;
-
-    const fallDuration = rand(6, 18);
-    const swayDuration = rand(3, 6);
-    const delay = rand(-10, 8);
-    p.style.animationDuration = ${fallDuration}s, ${swayDuration}s;
-    p.style.animationDelay = ${delay}s, ${rand(0, 2)}s;
-
-    p.style.opacity = ${rand(0.85, 1)};
-
-    container.appendChild(p);
-  }
-
-    // animaciones (coinciden con las keyframes fallText, swayText en CSS)
-    const fallDuration = rand(7, 16);
-    const swayDuration = rand(2.5, 5.5);
-    const delay = rand(-10, 6);
-    t.style.animationDuration = ${fallDuration}s, ${swayDuration}s;
-    t.style.animationDelay = ${delay}s, ${rand(0, 2)}s;
-
-    t.style.opacity = ${rand(0.7, 1)};
-
-    container.appendChild(t);
-  }
-})();
-    
+            container.appendChild(p);
+        }
+    }
+});
