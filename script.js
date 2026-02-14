@@ -48,39 +48,56 @@ window.onload = function() {
     }
 
 // 3. GENERADOR DE CASCADA DE CORAZONES
-    function createFallingHeart() {
-        const canopy = document.getElementById('canopy');
-        if (!canopy) return;
+(function () {
+  const CONTAINER_SELECTOR = ".petal-container";
+  const PETAL_COUNT = 28;
+  const container = document.querySelector(CONTAINER_SELECTOR);
+  if (!container) return;
 
-        const heart = document.createElement('div');
-        heart.className = 'heart-falling'; // Clase diferente para la caída
-        heart.innerHTML = '❤'; // Usamos el carácter de corazón
+  // Evitar ejecutar más de una vez
+  if (container.dataset.petalsInit === "true") return;
+  container.dataset.petalsInit = "true";
 
-        // Posición inicial: que salgan de la zona del árbol
-        const startX = Math.random() * 150 + 40; 
-        heart.style.left = `${startX}px`;
-        heart.style.top = `80px`; 
-        
-        // Color aleatorio
-        const colors = ['#ff4d6d', '#ff758f', '#c9184a'];
-        heart.style.color = colors[Math.floor(Math.random() * colors.length)];
-        
-        // Tamaño aleatorio
-        heart.style.fontSize = Math.random() * 10 + 10 + 'px';
-        
-        // Duración de caída aleatoria (entre 3 y 6 segundos)
-        const duration = Math.random() * 3 + 3;
-        heart.style.animation = `fall ${duration}s linear forwards`;
+  function rand(min, max) {
+    return Math.random() * (max - min) + min;
+  }
 
-        canopy.appendChild(heart);
+  // --- corazones ---
+  for (let i = 0; i < PETAL_COUNT; i++) {
+    const p = document.createElement("div");
+    p.className = "petal";
 
-        // Limpiar el elemento después de que termine la animación para no saturar la PC
-        setTimeout(() => {
-            heart.remove();
-        }, duration * 1000);
-    }
+    const base = 24;
+    const scale = rand(0.6, 1.5);
+    const size = Math.round(base * scale);
+    p.style.width = ${size}px;
+    p.style.height = ${size}px;
 
-    // Iniciar la cascada cada 300ms
-    setInterval(createFallingHeart, 300);
+    p.style.left = ${rand(-10, 110)}%;
+    p.style.top = ${rand(-20, -5)}vh;
+
+    const fallDuration = rand(6, 18);
+    const swayDuration = rand(3, 6);
+    const delay = rand(-10, 8);
+    p.style.animationDuration = ${fallDuration}s, ${swayDuration}s;
+    p.style.animationDelay = ${delay}s, ${rand(0, 2)}s;
+
+    p.style.opacity = ${rand(0.85, 1)};
+
+    container.appendChild(p);
+  }
+
+    // animaciones (coinciden con las keyframes fallText, swayText en CSS)
+    const fallDuration = rand(7, 16);
+    const swayDuration = rand(2.5, 5.5);
+    const delay = rand(-10, 6);
+    t.style.animationDuration = ${fallDuration}s, ${swayDuration}s;
+    t.style.animationDelay = ${delay}s, ${rand(0, 2)}s;
+
+    t.style.opacity = ${rand(0.7, 1)};
+
+    container.appendChild(t);
+  }
+})();
     
 };
